@@ -5,7 +5,7 @@ EXES = swtest
 
 CC = clang
 CPPFLAGS =
-CFLAGS = -std=c99 -Wall -Werror -g -m32 -mstackrealign
+CFLAGS = -std=c99 -Wall -Werror -g -m32 #-mstackrealign
 LD_FLAGS =
 RM = rm -f
 
