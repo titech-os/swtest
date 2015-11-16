@@ -1,0 +1,6 @@
+*.o
+a.out
+swtest
+
+*~
+.DS_Store

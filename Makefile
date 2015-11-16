@@ -15,12 +15,12 @@ RM = rm -f
 %.o: %.S
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-swtest: $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
 .PHONY: all clean allclean
 
 all: $(EXES)
+
+swtest: $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 clean:
 	$(RM) $(EXES)
