@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STACK_SIZE 4096
-#define STACK_DEPTH (STACK_SIZE / sizeof(void *))
-
 typedef unsigned int uint;
 
 struct context {
@@ -13,6 +10,9 @@ struct context {
     uint ebp;
     uint eip;
 };
+
+#define STACK_SIZE 4096
+#define STACK_DEPTH (STACK_SIZE / sizeof(uint))
 
 // swtch.S
 void swtch(struct context **old, struct context *new);
