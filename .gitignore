@@ -1,6 +1,7 @@
 *.o
 a.out
 swtest
+schtest
 
 *~
 .DS_Store

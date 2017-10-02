@@ -10,12 +10,12 @@
 #include "context.h"
 #include "swtch.h"
 
-struct context *foo_ctx, *bar_ctx, *baz_ctx;
+struct context *sch_ctx, *foo_ctx, *bar_ctx, *baz_ctx;
 
 void foo(uint c) {
     while (1) {
         printf("foo : %d\n", c);
-        swtch(&foo_ctx, bar_ctx);
+        swtch(&foo_ctx, sch_ctx);
         c += 1;
     }
 }
@@ -23,7 +23,7 @@ void foo(uint c) {
 void bar(uint c) {
     while (1) {
         printf("bar : %d\n", c);
-        swtch(&bar_ctx, baz_ctx);
+        swtch(&bar_ctx, sch_ctx);
         c += 2;
     }
 }
@@ -31,17 +31,26 @@ void bar(uint c) {
 void baz(uint c) {
     while (1) {
         printf("baz : %d\n", c);
-        swtch(&baz_ctx, foo_ctx);
+        swtch(&baz_ctx, sch_ctx);
         c += 3;
     }
 }
 
-int main() {
-    uint *bar_stack = valloc(STACK_SIZE);
-    uint *baz_stack = valloc(STACK_SIZE);
-    bar_ctx = new_context(bar_stack + STACK_DEPTH, bar, 0);
-    baz_ctx = new_context(baz_stack + STACK_DEPTH, baz, 0);
-    foo(0);
-    return 0;
+void scheduler() {
+    while (1) {
+        swtch(&sch_ctx, foo_ctx);
+        swtch(&sch_ctx, bar_ctx);
+        swtch(&sch_ctx, baz_ctx);
+    }
 }
 
+int main() {
+    uint *foo_stack = valloc(STACK_SIZE);
+    uint *bar_stack = valloc(STACK_SIZE);
+    uint *baz_stack = valloc(STACK_SIZE);
+    foo_ctx = new_context(foo_stack + STACK_DEPTH, foo, 0);;
+    bar_ctx = new_context(bar_stack + STACK_DEPTH, bar, 0);
+    baz_ctx = new_context(baz_stack + STACK_DEPTH, baz, 0);
+    scheduler();
+    return 0;
+}
