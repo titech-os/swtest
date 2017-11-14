@@ -9,7 +9,7 @@ LIB_OBJS = $(LIB_SRCS:%.c=%.o) $(ASM_SRCS:%.S=%.o)
 ALL_OBJS = $(EXE_SRCS:%.c=%.o) $(LIB_OBJS)
 EXES = swtest schtest
 
-CC = clang
+CC = gcc
 CPPFLAGS =
 CFLAGS = -std=c99 -pedantic -Wall -Wextra -Werror -g -m32 -mstackrealign
 LDFLAGS =
