@@ -12,8 +12,7 @@
 
 struct context *foo_ctx, *bar_ctx, *baz_ctx;
 
-void foo(void *arg) {
-    int c = (int)arg;
+void foo(int c) {
     while (1) {
         printf("foo : %d\n", c);
         swtch(&foo_ctx, bar_ctx);
@@ -21,8 +20,7 @@ void foo(void *arg) {
     }
 }
 
-void bar(void *arg) {
-    int c = (int)arg;
+void bar(int c) {
     while (1) {
         printf("bar : %d\n", c);
         swtch(&bar_ctx, baz_ctx);
@@ -30,8 +28,7 @@ void bar(void *arg) {
     }
 }
 
-void baz(void *arg) {
-    int c = (int)arg;
+void baz(int c) {
     while (1) {
         printf("baz : %d\n", c);
         swtch(&baz_ctx, foo_ctx);
@@ -42,8 +39,8 @@ void baz(void *arg) {
 int main() {
     void **bar_stack = valloc(STACK_SIZE);
     void **baz_stack = valloc(STACK_SIZE);
-    bar_ctx = new_context(bar_stack + STACK_DEPTH, bar, (void *)0);
-    baz_ctx = new_context(baz_stack + STACK_DEPTH, baz, (void *)0);
+    bar_ctx = new_context(bar_stack + STACK_DEPTH, bar, 0);
+    baz_ctx = new_context(baz_stack + STACK_DEPTH, baz, 0);
     foo(0);
     return 0;
 }
