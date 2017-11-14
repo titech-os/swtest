@@ -15,8 +15,8 @@ struct context *sch_ctx, *foo_ctx, *bar_ctx, *baz_ctx;
 void foo(uint c) {
     while (1) {
         printf("foo : %d\n", c);
-        swtch(&foo_ctx, sch_ctx);
         c += 1;
+        swtch(&foo_ctx, sch_ctx);
     }
 }
 
@@ -30,6 +30,9 @@ void bar(uint c) {
 
 void baz(uint c) {
     while (1) {
+        printf("baz : %d\n", c);
+        swtch(&baz_ctx, sch_ctx);
+        c += 3;
         printf("baz : %d\n", c);
         swtch(&baz_ctx, sch_ctx);
         c += 3;
