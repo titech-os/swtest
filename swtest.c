@@ -40,8 +40,8 @@ void baz(int c) {
 }
 
 int main() {
-    void **bar_stack = valloc(STACK_SIZE);
-    void **baz_stack = valloc(STACK_SIZE);
+    uint *bar_stack = valloc(STACK_SIZE);
+    uint *baz_stack = valloc(STACK_SIZE);
     bar_ctx = new_context(bar_stack + STACK_DEPTH, bar, 0);
     baz_ctx = new_context(baz_stack + STACK_DEPTH, baz, 0);
     foo(0);
